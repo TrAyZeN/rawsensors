@@ -14,13 +14,13 @@ Sensor types available:
 
 ## Usage
 To use this plugin, add `rawsensors` as a [dependency in your pubspec.yaml file](https://flutter.dev/docs/development/packages-and-plugins/using-packages). For example:
-```
+```yaml
 dependencies:
   rawsensors: 0.0.1
 ```
 
 ## Example
-```
+```dart
 import 'package:rawsensors/rawsensors.dart';
 
 RawSensors.getStream(SensorType.accelerometer)
