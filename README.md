@@ -20,6 +20,14 @@ dependencies:
 ```
 
 ## Example
+```
+import 'package:rawsensors/rawsensors.dart';
+
+RawSensors.getStream(SensorType.accelerometer)
+  .then((Stream sensorStream) => sensorStream.listen((dynamic data) {
+    print(data);
+  }));
+```
 
 ## Issues
 If you have any issue, bug or feature request please [open an issue](https://github.com/TrAyZeN/rawsensors/issues/new).
