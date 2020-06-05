@@ -63,7 +63,7 @@ class _SensorScreenState extends State<SensorScreen> with WidgetsBindingObserver
   void subscribeToSensorDataStream() {
     RawSensors.getStream(widget.sensorType)
       .then((Stream sensorStream) {
-        _streamSubscription = sensorStream.listen((dynamic data) {
+        _streamSubscription = sensorStream?.listen((dynamic data) {
           setState(() {
             _data = data;
           });

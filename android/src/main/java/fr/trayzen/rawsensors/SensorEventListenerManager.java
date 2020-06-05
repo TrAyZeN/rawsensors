@@ -29,6 +29,8 @@ public class SensorEventListenerManager {
         sensorTypes.put("accelerometer", Sensor.TYPE_ACCELEROMETER);
         sensorTypes.put("temperature", Sensor.TYPE_AMBIENT_TEMPERATURE);
         sensorTypes.put("gyroscope", Sensor.TYPE_GYROSCOPE);
+        sensorTypes.put("magnetometer", Sensor.TYPE_MAGNETIC_FIELD);
+        sensorTypes.put("light", Sensor.TYPE_LIGHT);
     }
 
     private void setupChannels(BinaryMessenger messenger) {

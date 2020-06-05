@@ -6,6 +6,8 @@ enum SensorType {
   accelerometer,
   temperature,
   gyroscope,
+  magnetometer,
+  light,
 }
 
 class RawSensors {
