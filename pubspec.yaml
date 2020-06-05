@@ -1,8 +1,8 @@
 name: rawsensors
-description: A new flutter plugin project.
+description: A flutter plugin that lets you access raw data from sensors
 version: 0.0.1
-author:
-homepage:
+author: TrAyZeN
+homepage: https://github.com/TrAyZeN/rawsensors
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
