@@ -6,13 +6,14 @@
 The goal of this plugin is to expose every sensors from the Android and IOS framework.
 
 ## Features
-Different sensor types are exposed via the enum `SensorType`:
-Sensor types available:
-- Accelerometer
-- Temperature
-- Gyroscope
-- Magnetometer
-- Light
+The different sensor types available are exposed via the enum `SensorType`:
+| SensorType    | Android                  | IOS             |
+|---------------|--------------------------|-----------------|
+| accelerometer | TYPE_ACCELEROMETER       | Not implemented |
+| temperature   | TYPE_AMBIENT_TEMPERATURE | Not implemented |
+| gyroscope     | TYPE_GYROSCOPE           | Not implemented |
+| magnetometer  | TYPE_MAGNETIC_FIELD      | Not implemented |
+| light         | TYPE_LIGHT               | Not implemented |
 
 **Warning**: This plugin does not support IOS for now, I would greatly appreciate some help to support IOS.
 
