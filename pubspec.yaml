@@ -1,5 +1,5 @@
 name: rawsensors
-description: A flutter plugin that lets you access raw data from sensors
+description: A flutter plugin that lets you access raw data from sensors, the goal of this plugin is to expose every sensors from the Android and IOS framework.
 version: 0.0.1
 homepage: https://github.com/TrAyZeN/rawsensors
 
