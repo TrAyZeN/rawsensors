@@ -3,8 +3,10 @@
 </h1>
 
 > A flutter plugin that lets you access raw data from sensors
+The goal of this plugin is to expose every sensors from the Android and IOS framework.
 
 ## Features
+Different sensor types are exposed via the enum `SensorType`:
 Sensor types available:
 - Accelerometer
 - Temperature
@@ -26,8 +28,14 @@ dependencies:
 import 'package:rawsensors/rawsensors.dart';
 
 RawSensors.getStream(SensorType.accelerometer)
-  .then((Stream sensorStream) => sensorStream.listen((dynamic data) {
-    print(data);
+  .then((Stream sensorStream) => {
+    if (sensorStream != null) {
+      sensorStream.listen((dynamic data) {
+        print(data);
+      }
+    } else {
+      print("No accelerometer found on device");
+    }
   }));
 ```
 
