@@ -9,6 +9,8 @@ Sensor types available:
 - Accelerometer
 - Temperature
 - Gyroscope
+- Magnetometer
+- Light
 
 **Warning**: This plugin does not support IOS for now, I would greatly appreciate some help to support IOS.
 
