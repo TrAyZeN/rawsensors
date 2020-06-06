@@ -12,19 +12,21 @@ enum SensorType {
 
 class RawSensors {
   static final MethodChannel _setupChannel =
-    const MethodChannel('fr.trayzen.rawsensors/setup');
+      const MethodChannel('fr.trayzen.rawsensors/setup');
 
-  static final Map<SensorType, EventChannel> _sensorChannels =
-    Map.fromIterable(SensorType.values, key: (v) => v,
-        value: (v) => EventChannel('fr.trayzen.rawsensors/${typeToName(v)}'));
+  static final Map<SensorType, EventChannel> _sensorChannels = Map.fromIterable(
+      SensorType.values,
+      key: (v) => v,
+      value: (v) => EventChannel('fr.trayzen.rawsensors/${typeToName(v)}'));
 
   static Map<SensorType, Stream<List<double>>> _sensorStreams =
-    Map.fromIterable(SensorType.values, key: (v) => v, value: (v) => null);
+      Map.fromIterable(SensorType.values, key: (v) => v, value: (v) => null);
 
   static Map<SensorType, int> _sensorAccuracies =
-    Map.fromIterable(SensorType.values, key: (v) => v, value: (v) => -1);
+      Map.fromIterable(SensorType.values, key: (v) => v, value: (v) => -1);
 
-  static Future<Stream<List<double>>> getStream(SensorType type, [int accuracy = 2]) async {
+  static Future<Stream<List<double>>> getStream(SensorType type,
+      [int accuracy = 2]) async {
     if (_sensorAccuracies[type] != accuracy) {
       final bool result = await _setAccuracy(type, accuracy);
 
