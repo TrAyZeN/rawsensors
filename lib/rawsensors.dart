@@ -11,22 +11,54 @@ enum SensorType {
 }
 
 class RawSensors {
-  static final MethodChannel _setupChannel =
-      const MethodChannel('fr.trayzen.rawsensors/setup');
+  factory RawSensors() {
+    if (_singleton == null) {
+      MethodChannel setupChannel =
+          const MethodChannel('fr.trayzen.rawsensors/setup');
 
-  static final Map<SensorType, EventChannel> _sensorChannels = Map.fromIterable(
-      SensorType.values,
-      key: (v) => v,
-      value: (v) => EventChannel('fr.trayzen.rawsensors/${typeToName(v)}'));
+      Map<SensorType, EventChannel> sensorChannels = Map.fromIterable(
+          SensorType.values,
+          key: (v) => v,
+          value: (v) => EventChannel('fr.trayzen.rawsensors/${typeToName(v)}'));
 
-  static Map<SensorType, Stream<List<double>>> _sensorStreams =
-      Map.fromIterable(SensorType.values, key: (v) => v, value: (v) => null);
+      Map<SensorType, Stream<List<double>>> sensorStreams =
+          Map.fromIterable(SensorType.values, key: (v) => v, value: (v) => null);
 
-  static Map<SensorType, int> _sensorAccuracies =
-      Map.fromIterable(SensorType.values, key: (v) => v, value: (v) => -1);
+      Map<SensorType, int> sensorAccuracies =
+          Map.fromIterable(SensorType.values, key: (v) => v, value: (v) => -1);
 
-  static Future<Stream<List<double>>> getStream(SensorType type,
-      [int accuracy = 2]) async {
+      _singleton = new RawSensors._constructor(
+        setupChannel,
+        sensorChannels,
+        sensorStreams,
+        sensorAccuracies
+      );
+    }
+
+    return _singleton;
+  }
+
+  RawSensors._constructor(
+    this._setupChannel,
+    this._sensorChannels,
+    this._sensorStreams,
+    this._sensorAccuracies
+  );
+
+  static RawSensors _singleton;
+  final MethodChannel _setupChannel;
+  final Map<SensorType, EventChannel> _sensorChannels;
+  Map<SensorType, Stream<List<double>>> _sensorStreams;
+  Map<SensorType, int> _sensorAccuracies;
+
+  /// Returns a [Future] containing the [Stream] of raw data from the sensor of
+  /// the corresponding sensor type
+  Future<Stream<List<double>>> getStream(SensorType type,
+      [int accuracy = 60000]) async {
+    if (accuracy < 0) {
+      throw new ArgumentError('Accuracy must be an absolute value');
+    }
+
     if (_sensorAccuracies[type] != accuracy) {
       final bool result = await _setAccuracy(type, accuracy);
 
@@ -42,7 +74,7 @@ class RawSensors {
     return _sensorStreams[type];
   }
 
-  static Future<bool> _setAccuracy(SensorType type, int accuracy) async {
+  Future<bool> _setAccuracy(SensorType type, int accuracy) async {
     try {
       await _setupChannel.invokeMethod('setAccuracy', <String, dynamic>{
         'sensor': typeToName(type),
