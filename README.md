@@ -14,6 +14,7 @@ The different sensor types available are exposed via the enum `SensorType`:
 | gyroscope     | TYPE_GYROSCOPE           | Not implemented |
 | magnetometer  | TYPE_MAGNETIC_FIELD      | Not implemented |
 | light         | TYPE_LIGHT               | Not implemented |
+| pressure      | TYPE_PRESSURE            | Not implemented |
 
 **Warning**: This plugin does not support IOS for now, I would greatly appreciate some help to support IOS.
 

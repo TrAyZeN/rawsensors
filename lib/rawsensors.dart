@@ -8,6 +8,7 @@ enum SensorType {
   gyroscope,
   magnetometer,
   light,
+  pressure,
 }
 
 class RawSensors {

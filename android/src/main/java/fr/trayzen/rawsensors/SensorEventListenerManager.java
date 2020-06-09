@@ -31,6 +31,7 @@ public class SensorEventListenerManager {
         sensorTypes.put("gyroscope", Sensor.TYPE_GYROSCOPE);
         sensorTypes.put("magnetometer", Sensor.TYPE_MAGNETIC_FIELD);
         sensorTypes.put("light", Sensor.TYPE_LIGHT);
+        sensorTypes.put("pressure", Sensor.TYPE_PRESSURE);
     }
 
     private void setupChannels(BinaryMessenger messenger) {
