@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: SensorType.values
                 .map((t) => RaisedButton(
-                      child: Text(RawSensors.typeToName(t)),
+                      child: Text(t.toString().split('.').last),
                       onPressed: () {
                         Navigator.push(
                             context,
@@ -55,7 +55,7 @@ class _SensorScreenState extends State<SensorScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(RawSensors.typeToName(widget.sensorType)),
+        title: Text(widget.sensorType.toString().split('.').last),
       ),
       body: Center(
         child: Column(
@@ -75,9 +75,9 @@ class _SensorScreenState extends State<SensorScreen>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      subscribeToSensorDataStream();
-    } else if (_streamSubscription != null) {
-      _streamSubscription.cancel();
+      _subscribeToSensorDataStream();
+    } else {
+      _unsubscribeFromSensorDataStream();
     }
   }
 
@@ -86,7 +86,7 @@ class _SensorScreenState extends State<SensorScreen>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
-    subscribeToSensorDataStream();
+    _subscribeToSensorDataStream();
   }
 
   @override
@@ -94,16 +94,20 @@ class _SensorScreenState extends State<SensorScreen>
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
 
-    if (_streamSubscription != null) _streamSubscription.cancel();
+    _unsubscribeFromSensorDataStream();
   }
 
-  void subscribeToSensorDataStream() {
-    RawSensors().getStream(widget.sensorType).then((Stream sensorStream) {
+  void _subscribeToSensorDataStream() {
+    RawSensors().getSensorStream(widget.sensorType).then((Stream sensorStream) {
       _streamSubscription = sensorStream?.listen((dynamic data) {
         setState(() {
           _data = data;
         });
       });
     });
+  }
+
+  void _unsubscribeFromSensorDataStream() {
+    _streamSubscription?.cancel();
   }
 }

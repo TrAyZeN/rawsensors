@@ -19,7 +19,7 @@ class RawSensors {
       Map<SensorType, EventChannel> sensorChannels = Map.fromIterable(
           SensorType.values,
           key: (v) => v,
-          value: (v) => EventChannel('fr.trayzen.rawsensors/${typeToName(v)}'));
+          value: (v) => EventChannel('fr.trayzen.rawsensors/${_typeToName(v)}'));
 
       Map<SensorType, Stream<List<double>>> sensorStreams =
           Map.fromIterable(SensorType.values, key: (v) => v, value: (v) => null);
@@ -51,16 +51,22 @@ class RawSensors {
   Map<SensorType, Stream<List<double>>> _sensorStreams;
   Map<SensorType, int> _sensorAccuracies;
 
+  Future<bool> isSensorAvailable(SensorType type) async {
+    return await _setupChannel.invokeMethod('isAvailable', <String, dynamic>{
+      'sensor': _typeToName(type),
+    }) == 'true';
+  }
+
   /// Returns a [Future] containing the [Stream] of raw data from the sensor of
   /// the corresponding sensor type
-  Future<Stream<List<double>>> getStream(SensorType type,
+  Future<Stream<List<double>>> getSensorStream(SensorType type,
       [int accuracy = 60000]) async {
     if (accuracy < 0) {
       throw new ArgumentError('Accuracy must be an absolute value');
     }
 
     if (_sensorAccuracies[type] != accuracy) {
-      final bool result = await _setAccuracy(type, accuracy);
+      final bool result = await _setSensorAccuracy(type, accuracy);
 
       if (result) {
         _sensorStreams[type] = _sensorChannels[type]
@@ -74,10 +80,10 @@ class RawSensors {
     return _sensorStreams[type];
   }
 
-  Future<bool> _setAccuracy(SensorType type, int accuracy) async {
+  Future<bool> _setSensorAccuracy(SensorType type, int accuracy) async {
     try {
       await _setupChannel.invokeMethod('setAccuracy', <String, dynamic>{
-        'sensor': typeToName(type),
+        'sensor': _typeToName(type),
         'accuracy': accuracy.toString(),
       });
     } on PlatformException {
@@ -88,7 +94,7 @@ class RawSensors {
     return true;
   }
 
-  static String typeToName(SensorType type) {
+  static String _typeToName(SensorType type) {
     return type.toString().split('.').last;
   }
 }

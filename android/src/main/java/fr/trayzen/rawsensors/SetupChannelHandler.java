@@ -15,15 +15,18 @@ class SetupChannelHandler implements MethodChannel.MethodCallHandler {
     public void onMethodCall(MethodCall call, MethodChannel.Result result) {
         if (call.method.equals("setAccuracy")) {
             try {
-                final String sensor = call.argument("sensor");
-                final String accuracy = call.argument("accuracy");
-                plugin.getSensorEventListenerManager().setListener(sensor, Integer.parseInt(accuracy));
+                plugin.getSensorEventListenerManager().setListener(
+                    (String) call.argument("sensor"),
+                    Integer.parseInt((String) call.argument("accuracy"))
+                );
             } catch (Exception e) {
                 result.error("", e.getMessage(), e.getCause());
                 return;
             }
-
             result.success(null);
+        } else if (call.method.equals("isAvailable")) {
+            result.success(Boolean.toString(
+                plugin.getSensorEventListenerManager().isSensorAvailable((String) call.argument("sensor"))));
         } else {
             result.notImplemented();
         }

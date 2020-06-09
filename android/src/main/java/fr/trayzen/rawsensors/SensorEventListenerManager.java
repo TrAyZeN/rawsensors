@@ -39,6 +39,10 @@ public class SensorEventListenerManager {
         }
     }
 
+    public Boolean isSensorAvailable(String sensor) {
+        return sensorManager.getDefaultSensor(sensorTypes.get(sensor)) != null;
+    }
+
     public void setListener(String sensor, int accuracy) {
         sensorChannels.get(sensor).setStreamHandler(
                 new SensorStreamHandler(sensorManager, sensorTypes.get(sensor), accuracy));
