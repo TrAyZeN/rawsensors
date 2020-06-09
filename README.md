@@ -29,7 +29,7 @@ dependencies:
 ```dart
 import 'package:rawsensors/rawsensors.dart';
 
-RawSensors.getStream(SensorType.accelerometer)
+RawSensors.getSensorStream(SensorType.accelerometer)
   .then((Stream sensorStream) => {
     if (sensorStream != null) {
       sensorStream.listen((dynamic data) {
