@@ -22,7 +22,7 @@ The different sensor types available are exposed via the enum `SensorType`:
 To use this plugin, add `rawsensors` as a [dependency in your pubspec.yaml file](https://flutter.dev/docs/development/packages-and-plugins/using-packages). For example:
 ```yaml
 dependencies:
-  rawsensors: 0.0.1
+  rawsensors: 0.0.3
 ```
 
 ## Example
