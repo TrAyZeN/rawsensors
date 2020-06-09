@@ -20,31 +20,26 @@ class RawSensors {
       Map<SensorType, EventChannel> sensorChannels = Map.fromIterable(
           SensorType.values,
           key: (v) => v,
-          value: (v) => EventChannel('fr.trayzen.rawsensors/${_typeToName(v)}'));
+          value: (v) =>
+              EventChannel('fr.trayzen.rawsensors/${_typeToName(v)}'));
 
-      Map<SensorType, Stream<List<double>>> sensorStreams =
-          Map.fromIterable(SensorType.values, key: (v) => v, value: (v) => null);
+      Map<SensorType, Stream<List<double>>> sensorStreams = Map.fromIterable(
+          SensorType.values,
+          key: (v) => v,
+          value: (v) => null);
 
       Map<SensorType, int> sensorAccuracies =
           Map.fromIterable(SensorType.values, key: (v) => v, value: (v) => -1);
 
       _singleton = new RawSensors._constructor(
-        setupChannel,
-        sensorChannels,
-        sensorStreams,
-        sensorAccuracies
-      );
+          setupChannel, sensorChannels, sensorStreams, sensorAccuracies);
     }
 
     return _singleton;
   }
 
-  RawSensors._constructor(
-    this._setupChannel,
-    this._sensorChannels,
-    this._sensorStreams,
-    this._sensorAccuracies
-  );
+  RawSensors._constructor(this._setupChannel, this._sensorChannels,
+      this._sensorStreams, this._sensorAccuracies);
 
   static RawSensors _singleton;
   final MethodChannel _setupChannel;
@@ -53,9 +48,11 @@ class RawSensors {
   Map<SensorType, int> _sensorAccuracies;
 
   Future<bool> isSensorAvailable(SensorType type) async {
-    return await _setupChannel.invokeMethod('isAvailable', <String, dynamic>{
-      'sensor': _typeToName(type),
-    }) == 'true';
+    final String result = await _setupChannel.invokeMethod('isAvailable', <String, dynamic>{
+          'sensor': _typeToName(type),
+        });
+
+    return result == 'true';
   }
 
   /// Returns a [Future] containing the [Stream] of raw data from the sensor of
