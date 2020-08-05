@@ -3,10 +3,12 @@
 </h1>
 
 > A flutter plugin that lets you access raw data from sensors
-The goal of this plugin is to expose every sensors from the Android and IOS framework.
+
+The goal of this plugin is to expose **every sensors** from the Android and IOS framework.
 
 ## Features
 The different sensor types available are exposed via the enum `SensorType`:
+
 | SensorType    | Android                  | IOS             |
 |---------------|--------------------------|-----------------|
 | accelerometer | TYPE_ACCELEROMETER       | Not implemented |

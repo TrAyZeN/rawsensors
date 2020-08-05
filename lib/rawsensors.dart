@@ -48,9 +48,10 @@ class RawSensors {
   Map<SensorType, int> _sensorAccuracies;
 
   Future<bool> isSensorAvailable(SensorType type) async {
-    final String result = await _setupChannel.invokeMethod('isAvailable', <String, dynamic>{
-          'sensor': _typeToName(type),
-        });
+    final String result =
+        await _setupChannel.invokeMethod('isAvailable', <String, dynamic>{
+      'sensor': _typeToName(type),
+    });
 
     return result == 'true';
   }
